@@ -1,0 +1,24 @@
+class Extended_PreInit_EventHandlers {
+    class ESCAPE_preInit {
+        init = "call compile preprocessFileLineNumbers 'escape\XEH_preInit.sqf'";
+    };
+};
+
+class Extended_PostInit_EventHandlers {
+    class ESCAPE_postInit {
+        init = "call compile preprocessFileLineNumbers 'escape\XEH_postInit.sqf'";
+    };
+};
+
+class CfgNotifications {
+  class ESCAPE_warning {
+    color[] = {1, 1, 1, 1};
+    iconPicture = "\a3\Ui_f\data\Map\Markers\Military\warning_ca.paa";
+    sound = "defaultNotification";
+    soundClose = "defaultNotificationClose";
+    title = "UWAGA";
+    description = "%1";
+    duration = 8;
+    priority = 99;
+  };
+};
