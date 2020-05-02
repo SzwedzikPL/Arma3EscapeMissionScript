@@ -118,7 +118,7 @@ ESCAPE_setting_bomb_taken_notification_text = "UCIEKINIERZY ZNALEŹLI BOMBĘ!";
 // Lista obiektów oraz nazw obiektów które mogą mieć akcję podłożenia bomby
 // Po wzięciu przez uciekiniera bomby jeden losowy cel zostanie
 // wybrany, pojawi się na nim akcja podłożenia bomby a jego pozycja
-// pozstanie uciekinierom oznaczona na mapie markerem z opisem celu
+// zostanie uciekinierom oznaczona na mapie markerem z opisem celu
 ESCAPE_setting_bomb_targets = [
   [bomb_target_1, "Butla z gazem"],
   [bomb_target_2, "Skrzynia z amunicją"],
@@ -129,8 +129,6 @@ ESCAPE_setting_bomb_targets = [
 ESCAPE_setting_bomb_target_marker_type = "hd_destroy";
 // Kolor markera który wyświetli się uciekinierom na pozycji obiektu do wysadzenia
 ESCAPE_setting_bomb_target_marker_color = "ColorRed";
-
-ESCAPE_setting_bomb_target_marker_text = "";
 
 // Maksymalna odległość w metrach z jakiej można wykonać akcję podłożenia bomby
 ESCAPE_setting_bomb_plant_actionable_distance = 5;

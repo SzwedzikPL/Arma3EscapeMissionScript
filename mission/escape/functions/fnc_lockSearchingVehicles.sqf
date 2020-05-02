@@ -1,5 +1,5 @@
 /*
- * Escape script loclSearchingVehicles function
+ * Escape script lockSearchingVehicles function
  * Locks or unlocks searching team vehicles
  * By SzwedzikPL (https://github.com/SzwedzikPL/Arma3EscapeMissionScript)
  */

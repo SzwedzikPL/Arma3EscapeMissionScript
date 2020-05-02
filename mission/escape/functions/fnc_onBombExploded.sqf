@@ -20,7 +20,7 @@ if (player in ESCAPE_setting_escaping_units) then {
 };
 
 // Create escape zone marker & show proper notification for searching units
-//if (player in ESCAPE_setting_searching_units) then {
+if (player in ESCAPE_setting_searching_units) then {
   private _markerSize = ESCAPE_setting_escaping_zone_searching_marker_size;
   private _marker = createMarkerLocal ["ESCAPE_escape_zone_searching_marker", _escapeZoneCirclePos];
   _marker setMarkerShapeLocal "ELLIPSE";
@@ -34,7 +34,7 @@ if (player in ESCAPE_setting_escaping_units) then {
   ]] call BIS_fnc_showNotification;
 
   hintSilent parseText "<t size='1.5'>Na mapie oznaczono strefę w której znajduje się punkt ewakuacji uciekinierów.</t>";
-//};
+};
 
 // Rest of code is server side
 if (!isServer) exitWith {};
