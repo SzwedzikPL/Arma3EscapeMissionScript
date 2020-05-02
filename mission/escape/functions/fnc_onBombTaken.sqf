@@ -1,4 +1,10 @@
-params ["_target"];
+/*
+ * Escape script onBombTaken function
+ * Triggered by bombTaken CBA event
+ * By SzwedzikPL (https://github.com/SzwedzikPL/Arma3EscapeMissionScript)
+ */
+
+params ["_target", "_markerText"];
 
 if (!hasInterface) exitWith {};
 ["ESCAPE_warning", [ESCAPE_setting_bomb_taken_notification_text]] call BIS_fnc_showNotification;
@@ -10,17 +16,20 @@ private _marker = createMarkerLocal ["ESCAPE_bomb_target_marker", getPos _target
 _marker setMarkerShapeLocal "ICON";
 _marker setMarkerTypeLocal ESCAPE_setting_bomb_target_marker_type;
 _marker setMarkerColorLocal ESCAPE_setting_bomb_target_marker_color;
-_marker setMarkerTextLocal ESCAPE_setting_bomb_target_marker_text;
+_marker setMarkerTextLocal _markerText;
 
 private _action = [
   "ESCAPE_plantBomb",
   "Podłóż bombę",
   "",
   ESCAPE_fnc_plantBomb,
-  {true},
+  {
+    params ["_target"];
+    !(_target getVariable ["ESCAPE_bombPlanted", false]) && (ESCAPE_setting_bomb_item in (itemsWithMagazines player))
+  },
   {},
-  _target,
+  [],
   [0,0,0],
-  3
+  ESCAPE_setting_bomb_plant_actionable_distance
 ] call ace_interact_menu_fnc_createAction;
-[_target, 0, [], _action] call ace_interact_menu_fnc_addActionToObject;
+[_target, 0, ["ACE_MainActions"], _action] call ace_interact_menu_fnc_addActionToObject;

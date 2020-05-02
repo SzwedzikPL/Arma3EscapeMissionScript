@@ -1,3 +1,8 @@
+/*
+ * Escape script postInit
+ * By SzwedzikPL (https://github.com/SzwedzikPL/Arma3EscapeMissionScript)
+ */
+
 call compile preprocessFileLineNumbers "escape\settings.sqf";
 
 // Declare events
@@ -5,10 +10,10 @@ call compile preprocessFileLineNumbers "escape\settings.sqf";
 ["ESCAPE_pursuitStarted", ESCAPE_fnc_onPursuitStarted] call CBA_fnc_addEventHandler;
 ["ESCAPE_bombTaken", ESCAPE_fnc_onBombTaken] call CBA_fnc_addEventHandler;
 ["ESCAPE_bombPlanted", ESCAPE_fnc_onBombPlanted] call CBA_fnc_addEventHandler;
-["ESCAPE_bombExplosion", ESCAPE_fnc_onBombExplosion] call CBA_fnc_addEventHandler;
+["ESCAPE_bombExploded", ESCAPE_fnc_onBombExploded] call CBA_fnc_addEventHandler;
 ["ESCAPE_unitKilled", ESCAPE_fnc_onUnitKilled] call CBA_fnc_addEventHandler;
 ["ESCAPE_unitEscaped", ESCAPE_fnc_onUnitEscaped] call CBA_fnc_addEventHandler;
-["ESCAPE_missionEnd", ESCAPE_fnc_onMissionEnd] call CBA_fnc_addEventHandler;
+["ESCAPE_gameEnd", ESCAPE_fnc_onGameEnd] call CBA_fnc_addEventHandler;
 
 // Lock searching vehicles
 2 call ESCAPE_fnc_lockSearchingVehicles;
@@ -27,14 +32,12 @@ if (player in ESCAPE_setting_escaping_units) then {
   } forEach ESCAPE_setting_bomb_spawns;
 };
 
-if (hasInterface) then {
-  player addEventHandler ["killed", {
-    ["ESCAPE_unitKilled", _this] call CBA_fnc_globalEvent;
-  }];
-};
-
 // Rest of code is server-side only
 if (!isServer) exitWith {};
+
+{
+  _x addMPEventHandler ["MPKilled", ESCAPE_fnc_handleUnitKilled];
+} forEach allUnits;
 
 // Setup escaping units
 private _spawnCenterPos = getMarkerPos selectRandom ESCAPE_setting_escaping_spawns;
@@ -54,6 +57,20 @@ private _dir = 0;
 // Setup escaping units supply box
 if (!isNull ESCAPE_setting_escaping_supply_box) then {
   ESCAPE_setting_escaping_supply_box setPosATL [_spawnCenterPos # 0, _spawnCenterPos # 1, 0];
+
+  if (count ESCAPE_setting_escaping_supply_box_content_sets > 0) then {
+    private _box = ESCAPE_setting_escaping_supply_box;
+    private _set = selectRandom ESCAPE_setting_escaping_supply_box_content_sets;
+
+    clearWeaponCargoGlobal _box;
+    clearMagazineCargoGlobal _box;
+    clearItemCargoGlobal _box;
+    clearBackpackCargoGlobal _box;
+
+    {
+      _box addItemCargoGlobal [_x # 0, _x # 1];
+    } forEach _set;
+  }
 };
 
 _spawnCenterPos spawn {
