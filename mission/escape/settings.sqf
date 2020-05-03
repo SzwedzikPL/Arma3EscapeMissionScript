@@ -141,3 +141,8 @@ ESCAPE_setting_time_to_plant_bomb = 2;
 // Czas w minutach jaki mają uciekinierzy, żeby dotrzeć do punktu ucieczki
 // Ten czas będzie liczony od momentu wybuchu bomby
 ESCAPE_setting_time_to_escape = 2;
+
+/* =================== INNE =================== */
+
+// Lista obiektów które zostaną usunięte po rozpoczęciu pościgu
+ESCAPE_settings_objects_to_delete_after_pursuit_start = [gate_1, gate_2];

@@ -84,6 +84,11 @@ if (hasInterface) then {
 // Rest of code is server-side
 if (!isServer) exitWith {};
 
+// Remove objects
+{
+  deleteVehicle _x;
+} forEach ESCAPE_settings_objects_to_delete_after_pursuit_start;
+
 // Sound alarm
 private _alarm = createSoundSource ["Sound_Alarm", position ESCAPE_setting_searching_pursuit_alarm_source, [], 0];
 [{deleteVehicle _this;}, _alarm, 7.5] call CBA_fnc_waitAndExecute;
