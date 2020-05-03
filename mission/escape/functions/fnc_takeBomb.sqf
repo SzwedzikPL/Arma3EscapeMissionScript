@@ -6,6 +6,9 @@
 
 params ["_bombObject"];
 
+// Exit if game already ended;
+if (missionNamespace getVariable ['ESCAPE_gameEnded', false]) exitWith {};
+
 // Exit if player is not in escaping team
 if (!(player in ESCAPE_setting_escaping_units)) exitWith {
   hint parseText "<t size='1.5'>Nie możesz podnieść bomby.<br/>Nie jesteś uciekinierem.</t>";
@@ -22,6 +25,10 @@ player addItem ESCAPE_setting_bomb_item;
 // Delete bomb object
 deleteVehicle _bombObject;
 
-// Send event bombTaken with random bomb target
+// Exit if bomb was taken before
+if (missionNamespace getVariable ["ESCAPE_bombTaken", false]) exitWith {};
+missionNamespace setVariable ["ESCAPE_bombTaken", true, true];
+
+// Send bombTaken event with random bomb target
 private _target = selectRandom ESCAPE_setting_bomb_targets;
 ["ESCAPE_bombTaken", _target] call CBA_fnc_globalEvent;

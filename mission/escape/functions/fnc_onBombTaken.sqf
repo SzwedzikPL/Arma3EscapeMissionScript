@@ -6,8 +6,19 @@
 
 params ["_target", "_markerText"];
 
+if (isServer) then {
+  // Update end time
+  private _endtime = CBA_missionTime + (ESCAPE_setting_time_to_plant_bomb * 60);
+  missionNamespace setVariable ['ESCAPE_endTime', _endtime + 1, true];
+};
+
 if (!hasInterface) exitWith {};
-["ESCAPE_warning", [ESCAPE_setting_bomb_taken_notification_text]] call BIS_fnc_showNotification;
+
+// Show notification
+private _minutesForm = ESCAPE_setting_time_to_plant_bomb call ESCAPE_fnc_getMinutesForm;
+["ESCAPE_warning", [
+  format ["Uciekinierzy znaleźli bombę! Mają %1 %2 żeby ją podłożyć.", ESCAPE_setting_time_to_plant_bomb, _minutesForm]
+]] call BIS_fnc_showNotification;
 
 // Exit if player is not escaping unit
 if (!(player in ESCAPE_setting_escaping_units)) exitWith {};

@@ -4,7 +4,7 @@
  * By SzwedzikPL (https://github.com/SzwedzikPL/Arma3EscapeMissionScript)
  */
 
-params ["_unit", "_killer", "_instigator"];
+params ["_unit"];
 
 // Rest of code is server-side
 if (!isServer) exitWith {};
@@ -12,46 +12,39 @@ if (!isServer) exitWith {};
 // Ignore kills after game ended
 if (missionNamespace getVariable ['ESCAPE_gameEnded', false]) exitWith {};
 
+// Exit if unit was killed before (ignore second killed event from ACE3)
 private _killedUnits = missionNamespace getVariable ['ESCAPE_killedUnits', []];
 if (_unit in _killedUnits) exitWith {};
 
+// Update killed units
 _killedUnits pushBack _unit;
 missionNamespace setVariable ['ESCAPE_killedUnits', _killedUnits];
 
-// Get game state
-private _escapedUnits = missionNamespace getVariable ['ESCAPE_escapedUnits', []];
-private _escapingUnitsLeft = count (ESCAPE_setting_escaping_units select {alive _x && !(_x in _escapedUnits)});
-private _searchingUnitsLeft = count (ESCAPE_setting_searching_units select {alive _x});
+// Check game state
+call ESCAPE_fnc_checkGameState;
 
-// Check if game should be ended
-if (_escapingUnitsLeft <= 0) exitWith {
-  private _reason = '';
+// Exit if game ended
+if (missionNamespace getVariable ['ESCAPE_gameEnded', false]) exitWith {};
 
-  if (count _escapedUnits > 0) then {
-    private _reasonText = ['%1 uciekinierów uciekło.', 'Jeden uciekinier uciekł.'] select ((count _escapedUnits) == 1);
-    _reason = format [_reasonText, count _escapedUnits];
-  } else {
-    _reason = "Wszyscy uciekinierzy zgineli.";
-  };
-
-  _reason call ESCAPE_fnc_endGame;
+// Respawn bomb if unit had one
+if (ESCAPE_setting_bomb_item in (itemsWithMagazines _unit)) then {
+  _unit removeItem ESCAPE_setting_bomb_item;
+  private _bombPos = _unit getPos [0.5, (getDir _unit) + 90];
+  [_bombPos] call ESCAPE_fnc_createBomb;
 };
 
-if (_searchingUnitsLeft <= 0) exitWith {
-  "Wszyscy poszukiwacze zgineli." call ESCAPE_fnc_endGame;
-};
-
-// Trigger event for players
-private _unitTeam = '';
-private _unitTeammatesLeftCount = 0;
-
+// Determine unit team
+private _unitTeam = "";
 if (_unit in ESCAPE_setting_escaping_units) then {
- _unitTeam = 'escape';
- _unitTeammatesLeftCount = _escapingUnitsLeft;
+ _unitTeam = "escape";
 };
 if (_unit in ESCAPE_setting_searching_units) then {
-  _unitTeam = 'search';
-  _unitTeammatesLeftCount = _searchingUnitsLeft;
+  _unitTeam = "search";
 };
 
+// Exit if unit is not on any team
+if (_unitTeam == "") exitWith {};
+
+// Send notification to all players
+private _unitTeammatesLeftCount = _unitTeam call ESCAPE_fnc_getTeamUnitsLeftCount;
 ["ESCAPE_unitKilled", [_unitTeam, _unitTeammatesLeftCount]] call CBA_fnc_globalEvent;

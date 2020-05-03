@@ -7,16 +7,9 @@ ESCAPE_setting_searching_units = [poszukiwacz_1, poszukiwacz_2, poszukiwacz_3];
 // Pojazdy będą zablokowane do czasu rozpoczęcia pościgu
 ESCAPE_setting_searching_vehicles = [smiglo_1, smiglo_2];
 
-// Ścieżka do pliku dźwiękowego który zostanie odtworzony w momencie rozpoczęciu pościgu
-// Ustaw pusty tekst jeśli chcesz wyłączyć dźwięk
-ESCAPE_setting_searching_pursuit_alarm_sound = "A3\Sounds_F\sfx\alarm_blufor.wss";
-
 // Obiekt którego pozycja będzie użyta jako źródło dźwięku odtworzonego
 // przy rozpoczęciu pościgu.
 ESCAPE_setting_searching_pursuit_alarm_source = gamelogic_megafon;
-
-// Treść notyfikacji wyświetlonej wszystkim graczom w momencie rozpoczęcia pościgu
-ESCAPE_setting_searching_pursuit_notification_text = "POŚCIG ROZPOCZĘTY!";
 
 /* =================== UCIEKINIERZY =================== */
 
@@ -111,10 +104,6 @@ ESCAPE_setting_bomb_class = "Land_Suitcase_F";
 // Item ten będzie też wymagany do podłożenia bomby
 ESCAPE_setting_bomb_item = "SatPhone";
 
-// Treść notyfikacji wyświetlonej wszystkim graczom w momencie gdy któryś z
-// uciekinierów weźmie bombę
-ESCAPE_setting_bomb_taken_notification_text = "UCIEKINIERZY ZNALEŹLI BOMBĘ!";
-
 // Lista obiektów oraz nazw obiektów które mogą mieć akcję podłożenia bomby
 // Po wzięciu przez uciekiniera bomby jeden losowy cel zostanie
 // wybrany, pojawi się na nim akcja podłożenia bomby a jego pozycja
@@ -138,3 +127,17 @@ ESCAPE_setting_bomb_planting_duration = 5;
 
 // Czas w sekundach od podłożenia bomby do detonacji
 ESCAPE_setting_bomb_timer = 12;
+
+/* =================== LIMITY CZASOWE =================== */
+
+// Czas w minutach jaki mają uciekinierzy, żeby znaleźć bombę
+// Ten czas będzie liczony od momentu rozpoczęcia pościgu
+ESCAPE_setting_time_to_find_bomb = 2;
+
+// Czas w minutach jaki mają uciekinierzy, żeby podłożyć bombę
+// Ten czas będzie liczony od momentu jej znalezienia przez któregoś uciekiniera
+ESCAPE_setting_time_to_plant_bomb = 2;
+
+// Czas w minutach jaki mają uciekinierzy, żeby dotrzeć do punktu ucieczki
+// Ten czas będzie liczony od momentu wybuchu bomby
+ESCAPE_setting_time_to_escape = 2;

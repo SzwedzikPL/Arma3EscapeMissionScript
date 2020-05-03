@@ -3,6 +3,10 @@
  * By SzwedzikPL (https://github.com/SzwedzikPL/Arma3EscapeMissionScript)
  */
 
+ESCAPE_fnc_getMinutesForm = compile preprocessFileLineNumbers "escape\functions\fnc_getMinutesForm.sqf";
+ESCAPE_fnc_createBomb = compile preprocessFileLineNumbers "escape\functions\fnc_createBomb.sqf";
+ESCAPE_fnc_getTeamUnitsLeftCount = compile preprocessFileLineNumbers "escape\functions\fnc_getTeamUnitsLeftCount.sqf";
+ESCAPE_fnc_checkGameState = compile preprocessFileLineNumbers "escape\functions\fnc_checkGameState.sqf";
 ESCAPE_fnc_takeBomb = compile preprocessFileLineNumbers "escape\functions\fnc_takeBomb.sqf";
 ESCAPE_fnc_plantBomb = compile preprocessFileLineNumbers "escape\functions\fnc_plantBomb.sqf";
 ESCAPE_fnc_lockSearchingVehicles = compile preprocessFileLineNumbers "escape\functions\fnc_lockSearchingVehicles.sqf";

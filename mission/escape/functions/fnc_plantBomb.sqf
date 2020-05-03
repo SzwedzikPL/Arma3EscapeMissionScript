@@ -6,6 +6,9 @@
 
 params ["_target"];
 
+// Exit if game already ended;
+if (missionNamespace getVariable ['ESCAPE_gameEnded', false]) exitWith {};
+
 private _noBombItemError = parseText "<t size='1.5'>Nie możesz podłożyć bomby.<br/>Nie masz jej w ekwipunku.</t>";
 
 // Exit if player don't have bomb in inventory
