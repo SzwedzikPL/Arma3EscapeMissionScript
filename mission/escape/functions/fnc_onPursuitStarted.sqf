@@ -61,7 +61,7 @@ if (hasInterface) then {
 
       "ESCAPE_endTimeClock" cutText [
         format [
-          "<br/><br/><br/><br/><br /><t font='EtelkaMonospaceProBold' size='2' shadow='2'>%1:%2</t></t>",
+          "<br/><br/><br/><br/><br /><t font='EtelkaMonospaceProBold' size='2' align='left' shadow='2'>%1:%2&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</t>",
           _minutesLeft, _secondsLeft
         ],
         "PLAIN DOWN",
